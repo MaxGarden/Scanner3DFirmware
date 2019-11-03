@@ -1,0 +1,21 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
+PROJECT(Scanner3DFirmware)
+
+SET(CMAKE_CXX_STANDARD 17)
+
+SET(SCANNER_3D_FIRMWARE_SOURCES
+    Source/pch.h
+    Source/pch.cpp
+    
+    Source/Scanner3DFirmware/main.cpp
+)
+
+ADD_SUBDIRECTORY(Dependencies/RemoteServices)
+
+ADD_EXECUTABLE(Scanner3DFirmware ${SCANNER_3D_FIRMWARE_SOURCES})
+
+ADD_DEPENDENCIES(Scanner3DFirmware RemoteServices)
+
+TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Source/RemoteServices Include/RemoteServices)
+
+SET(CMAKE_INCLUDE_CURRENT_DIR ON)
