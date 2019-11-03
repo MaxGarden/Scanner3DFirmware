@@ -1,17 +1,15 @@
 #include "pch.h"
 #include "Networking/Server/WebSocketServer.h"
+#include "RemoteServices/DataModels/Services.h"
+#include "RemoteServices/DataModels/Server.h"
 #include <iostream>
 
 int main()
 {
     Networking::Initialize();
 
-    const auto server = Networking::IWebSocketServer::CreateWebby(50485, 1);
-
-    server->SetOnClientConnectedCallback([](const auto& connection)
-    {
-        std::cout << "Someone is connected";
-    });
+    auto webbyServer = Networking::IWebSocketServer::CreateWebby(50485, 1);
+    const auto server = RemoteServices::IServer::Create(std::move(webbyServer));
 
     server->Initialize();
 
