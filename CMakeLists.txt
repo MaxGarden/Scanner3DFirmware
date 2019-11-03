@@ -16,6 +16,7 @@ ADD_EXECUTABLE(Scanner3DFirmware ${SCANNER_3D_FIRMWARE_SOURCES})
 
 ADD_DEPENDENCIES(Scanner3DFirmware RemoteServices)
 
-TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Source/RemoteServices Include/RemoteServices)
+TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Dependencies/RemoteServices/Include Dependencies/RemoteServices/Dependencies/Networking/Include)
+TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices)
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
