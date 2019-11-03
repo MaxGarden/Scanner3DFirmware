@@ -8,6 +8,9 @@ SET(SCANNER_3D_FIRMWARE_SOURCES
     Source/pch.cpp
     
     Source/Scanner3DFirmware/main.cpp
+    
+    Source/Scanner3DFirmware/Services/ServerServicesBuilder.h
+    Source/Scanner3DFirmware/Services/ServerServicesBuilder.cpp
 )
 
 ADD_SUBDIRECTORY(Dependencies/RemoteServices)
