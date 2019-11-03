@@ -17,13 +17,13 @@ int main()
     };
 
     if (!Networking::Initialize())
-        return fail(-1, "Cannot initialize networking");
+        return fail(-1, "Cannot initialize networking.");
 
-    auto webbyServer = Networking::IWebSocketServer::CreateWebby(50485, 1);
-    if (!webbyServer)
+    auto websocketServer = Networking::IWebSocketServer::CreateWebby(50485, 1);
+    if (!websocketServer)
         return fail(-2, "Cannot create web socket server.");
 
-    const auto server = RemoteServices::IServerSharedPtr{ RemoteServices::IServer::Create(std::move(webbyServer)) };
+    const auto server = RemoteServices::IServerSharedPtr{ RemoteServices::IServer::Create(std::move(websocketServer)) };
     if (!server)
         return fail(-3, "Cannot create server data model.");
 
@@ -32,7 +32,7 @@ int main()
         return fail(-4, "Cannot create server controller.");
 
     if (!serverController->SetDataModel(server))
-        return fail(-5, "Cannot set controller's data model.");
+        return fail(-5, "Server controller has not accepters server data model.");
 
     auto servicesBuilder = std::make_unique<ServerServicesBuilder>();
     if (!serverController->RegisterListener(std::move(servicesBuilder)))
