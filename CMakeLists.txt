@@ -8,12 +8,19 @@ SET(SCANNER_3D_FIRMWARE_SOURCES
     Source/pch.cpp
     
     Source/Scanner3DFirmware/main.cpp
+    Source/Scanner3DFirmware/Scanner3DFirmware.h
     
     Source/Scanner3DFirmware/Services/ServerServicesBuilder.h
     Source/Scanner3DFirmware/Services/ServerServicesBuilder.cpp  
     
+    Source/Scanner3DFirmware/Camera/Camera.h
+    Source/Scanner3DFirmware/Camera/Camera.cpp
+    
     Source/Scanner3DFirmware/Services/Echo/EchoService.h
     Source/Scanner3DFirmware/Services/Echo/EchoService.cpp
+    
+    Source/Scanner3DFirmware/Services/Camera/CameraService.h
+    Source/Scanner3DFirmware/Services/Camera/CameraService.cpp
 )
 
 ADD_SUBDIRECTORY(Dependencies/RemoteServices)
@@ -22,7 +29,7 @@ ADD_EXECUTABLE(Scanner3DFirmware ${SCANNER_3D_FIRMWARE_SOURCES})
 
 ADD_DEPENDENCIES(Scanner3DFirmware RemoteServices)
 
-TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Dependencies/RemoteServices/Include Dependencies/RemoteServices/Dependencies/Networking/Include)
+TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Source/Scanner3DFirmware Dependencies/RemoteServices/Include Dependencies/RemoteServices/Dependencies/Networking/Include)
 TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices)
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
