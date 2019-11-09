@@ -3,6 +3,7 @@
 #include "RemoteServices/Services/ServiceFactory.h"
 
 #include "Echo/EchoService.h"
+#include "Camera/CameraService.h"
 
 using namespace Scanner3DFirmware;
 using namespace Scanner3DFirmware::Services;
@@ -18,4 +19,5 @@ void ServerServicesBuilder::RegisterServicesFactories(const RemoteServices::ISer
         return;
 
     servicesController->RegisterServiceFactory(RemoteServices::ServiceFactory<EchoService>::CreateFactory("echo"));
+    servicesController->RegisterServiceFactory(RemoteServices::ServiceFactory<CameraService>::CreateFactory("camera"));
 }
