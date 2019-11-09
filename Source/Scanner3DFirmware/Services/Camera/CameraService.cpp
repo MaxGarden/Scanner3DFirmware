@@ -6,9 +6,9 @@
 
 using namespace Scanner3DFirmware::Services;
 
-void CameraService::OnRegisterRequestsHandlers()
+bool CameraService::Initialize()
 {
-    auto result = true;
+    auto result = RequestResponseServiceBase::Initialize();
 
     result &= RegisterRequestHandler('g', [this](auto&& payload)
     {
@@ -33,6 +33,7 @@ void CameraService::OnRegisterRequestsHandlers()
     });
 
     FIRMWARE_ASSERT(result);
+    return result;
 }
 
 CameraService::Response CameraService::CreateConfigResponse()

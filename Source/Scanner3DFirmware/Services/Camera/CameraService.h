@@ -10,8 +10,7 @@ namespace Scanner3DFirmware::Services
         CameraService() = default;
         virtual ~CameraService() override final = default;
 
-    protected:
-        virtual void OnRegisterRequestsHandlers() override final;
+        virtual bool Initialize() override final;
 
     private:
         Response CreateConfigResponse();
