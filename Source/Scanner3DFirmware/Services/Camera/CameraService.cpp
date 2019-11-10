@@ -17,10 +17,10 @@ bool CameraService::Initialize()
 
     result &= RegisterRequestHandler('a', [this](auto&& payload)
     {
-        if (payload.size() == sizeof(Camera::CameraConfig) + 1)
+        if (payload.size() == sizeof(Camera::CameraConfig))
         {
-            const auto config = reinterpret_cast<const Camera::CameraConfig*>(&payload[1]);
-            Camera::Camera::GetInstance().ApplyConfig(*config);
+            const auto config = reinterpret_cast<const Camera::CameraConfig*>(payload.data());
+            Camera::Camera::GetInstance().ApplyConfig(Camera::CameraConfig{ *config });
         }
 
         return CreateConfigResponse();
