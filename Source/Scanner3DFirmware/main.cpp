@@ -39,7 +39,7 @@ int main()
     if (!serverController->RegisterListener(std::move(servicesBuilder)))
         return fail(-6, "Cannot register services builder.");
 
-    if(!Camera::Camera::GetInstance().Initialize())
+    if(!Camera::Initialize())
         return fail(-7, "Cannot initialize camera.");
     
     if (!server->Initialize())
@@ -50,7 +50,7 @@ int main()
     while (true)
         server->Update();
 
-    Camera::Camera::GetInstance().Finalize();
+    Camera::Finalize();
     server->Finalize();
     Networking::Finalize();
 

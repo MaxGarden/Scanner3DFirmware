@@ -1,11 +1,8 @@
 #pragma once
-#if defined(UNIX)
-#include <raspicam/raspicam.h>
-#endif
 
 namespace Scanner3DFirmware::Camera
 {
-    struct CameraConfig
+    struct Config
     {
         unsigned short Width;           //multiple of 320
         unsigned short Height;          //multiple of 240
@@ -16,29 +13,11 @@ namespace Scanner3DFirmware::Camera
         byte Saturation;                //0 to 100
     };
 
-    class Camera final
-    {
-    public:
-        ~Camera() = default;
+    bool Initialize();
+    void Finalize();
 
-        bool Initialize();
-        void Finalize();
+    std::vector<byte> Capture();
 
-        std::vector<byte> Capture();
-
-        void ApplyConfig(const CameraConfig& config);
-        CameraConfig GetConfig() const;
-
-        static Camera& GetInstance() noexcept;
-
-    private:
-        Camera() = default;
-
-    private:
-#if defined(UNIX)
-        raspicam::RaspiCam m_camera;
-        
-        static const raspicam::RASPICAM_FORMAT s_cameraImageFormat;
-#endif
-    };
+    void ApplyConfig(const Config& config);
+    Config GetConfig();
 }

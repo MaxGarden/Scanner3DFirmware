@@ -17,10 +17,10 @@ bool CameraService::Initialize()
 
     result &= RegisterRequestHandler('a', [this](auto&& payload)
     {
-        if (payload.size() == sizeof(Camera::CameraConfig))
+        if (payload.size() == sizeof(Camera::Config))
         {
-            const auto config = reinterpret_cast<const Camera::CameraConfig*>(payload.data());
-            Camera::Camera::GetInstance().ApplyConfig(*config);
+            const auto config = reinterpret_cast<const Camera::Config*>(payload.data());
+            Camera::ApplyConfig(*config);
         }
 
         return CreateConfigResponse();
@@ -28,7 +28,7 @@ bool CameraService::Initialize()
 
     result &= RegisterRequestHandler('c', [this](auto&& payload)
     {
-        auto responsePayload = Camera::Camera::GetInstance().Capture();
+        auto responsePayload = Camera::Capture();
         const auto responseType = responsePayload.empty() ? Response::ResponseType::Fail : Response::ResponseType::Ok;
         return Response{ responseType, std::move(responsePayload) };
     });
@@ -39,9 +39,9 @@ bool CameraService::Initialize()
 
 CameraService::Response CameraService::CreateConfigResponse()
 {
-    const auto config = Camera::Camera::GetInstance().GetConfig();
+    const auto config = Camera::GetConfig();
     const auto beginIterator = reinterpret_cast<const RemoteServices::byte*>(&config);
-    const auto endIterator = beginIterator + sizeof(Camera::CameraConfig);
+    const auto endIterator = beginIterator + sizeof(Camera::Config);
 
     return Response{ Response::ResponseType::Ok, RemoteServices::ServicePayload{ beginIterator, endIterator } };
 }
