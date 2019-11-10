@@ -3,6 +3,8 @@ PROJECT(Scanner3DFirmware)
 
 SET(CMAKE_CXX_STANDARD 17)
 
+FIND_PACKAGE(raspicam REQUIRED)
+
 SET(SCANNER_3D_FIRMWARE_SOURCES
     Source/pch.h
     Source/pch.cpp
@@ -27,6 +29,6 @@ ADD_EXECUTABLE(Scanner3DFirmware ${SCANNER_3D_FIRMWARE_SOURCES})
 ADD_DEPENDENCIES(Scanner3DFirmware RemoteServices)
 
 TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Source/Scanner3DFirmware Dependencies/RemoteServices/Include Dependencies/RemoteServices/Dependencies/Networking/Include)
-TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices)
+TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices raspicam)
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
