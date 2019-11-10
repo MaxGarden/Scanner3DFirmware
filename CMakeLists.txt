@@ -3,7 +3,7 @@ PROJECT(Scanner3DFirmware)
 
 SET(CMAKE_CXX_STANDARD 17)
 
-IF(UNIX)
+IF(NOT WIN32)
     FIND_PACKAGE(raspicam REQUIRED)
 ENDIF()
 
@@ -41,10 +41,10 @@ ADD_DEPENDENCIES(Scanner3DFirmware RemoteServices)
 
 TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Source/Scanner3DFirmware Dependencies/RemoteServices/Include Dependencies/RemoteServices/Dependencies/Networking/Include)
 
-IF(UNIX)
-    TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices raspicam)
-ELSE()
+IF(WIN32)
     TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices)
+ELSE()
+    TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices raspicam)
 ENDIF()
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)

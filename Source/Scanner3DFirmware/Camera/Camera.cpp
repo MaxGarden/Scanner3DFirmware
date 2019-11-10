@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "Camera.h"
 
-#if defined(UNIX)
+#if !defined(WIN32)
 #include <raspicam/raspicam.h>
 #endif
 
 using namespace Scanner3DFirmware;
 
-#if defined(UNIX)
+#if !defined(WIN32)
 static const raspicam::RASPICAM_FORMAT s_cameraImageFormat = raspicam::RASPICAM_FORMAT_GRAY;
 static raspicam::RaspiCam s_camera;
 
