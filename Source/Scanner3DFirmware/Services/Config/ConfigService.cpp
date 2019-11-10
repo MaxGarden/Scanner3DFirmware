@@ -32,7 +32,7 @@ ConfigService::Response ConfigService::CreateConfigResponse()
 {
     const auto config = Config::GetConfig();
     const auto beginIterator = reinterpret_cast<const RemoteServices::byte*>(&config);
-    const auto endIterator = beginIterator + sizeof(Camera::Config);
+    const auto endIterator = beginIterator + sizeof(Config::Config);
 
     return Response{ Response::ResponseType::Ok, RemoteServices::ServicePayload{ beginIterator, endIterator } };
 }
