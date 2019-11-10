@@ -21,7 +21,7 @@ void Camera::Finalize()
     m_camera.release();
 }
 
-std::vector<Scanner3DFirmware::byte> Camera::RetriveGrayScaleImage()
+std::vector<Scanner3DFirmware::byte> Camera::CaptureGrayScale()
 {
     static const auto imageFormat = raspicam::RASPICAM_FORMAT_GRAY;
     
