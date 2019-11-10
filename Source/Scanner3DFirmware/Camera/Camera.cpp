@@ -3,11 +3,14 @@
 
 using namespace Scanner3DFirmware::Camera;
 
+const raspicam::RASPICAM_FORMAT Camera::s_cameraImageFormat = raspicam::RASPICAM_FORMAT_GRAY;
+
 bool Camera::Initialize()
 {
     if(m_camera.isOpened())
         return false;
     
+    m_camera.setFormat(s_cameraImageFormat);
     return m_camera.open();
 }
 
@@ -21,16 +24,17 @@ void Camera::Finalize()
     m_camera.release();
 }
 
-std::vector<Scanner3DFirmware::byte> Camera::CaptureGrayScale()
+std::vector<Scanner3DFirmware::byte> Camera::Capture()
 {
-    static const auto imageFormat = raspicam::RASPICAM_FORMAT_GRAY;
-    
     std::vector<byte> result;
     
-    const auto dataSize = m_camera.getImageTypeSize(imageFormat);
+    if(!m_camera.grab())
+        return result;
+    
+    const auto dataSize = m_camera.getImageTypeSize(s_cameraImageFormat);
     result.resize(dataSize);
     
-    m_camera.retrieve(&result[0], imageFormat);
+    m_camera.retrieve(&result[0]);
     return result;
 }
 

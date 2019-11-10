@@ -22,7 +22,7 @@ namespace Scanner3DFirmware::Camera
         bool Initialize();
         void Finalize();
 
-        std::vector<byte> CaptureGrayScale();
+        std::vector<byte> Capture();
 
         void ApplyConfig(const CameraConfig& config);
         CameraConfig GetConfig() const;
@@ -34,5 +34,7 @@ namespace Scanner3DFirmware::Camera
 
     private:
         raspicam::RaspiCam m_camera;
+        
+        static const raspicam::RASPICAM_FORMAT s_cameraImageFormat;
     };
 }
