@@ -55,7 +55,7 @@ void Camera::ApplyConfig(const Config& config)
     s_camera.setSaturation(config.Saturation);
 }
 
-Config Camera::GetConfig() const
+Camera::Config Camera::GetConfig()
 {
     Config result;
     
