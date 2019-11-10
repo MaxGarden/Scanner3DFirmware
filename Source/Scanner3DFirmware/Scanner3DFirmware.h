@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <memory>
 #include <vector>
+#include <cmath>
 
 namespace Scanner3DFirmware
 {
