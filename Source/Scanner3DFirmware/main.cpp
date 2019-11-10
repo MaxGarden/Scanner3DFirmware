@@ -4,6 +4,7 @@
 #include "RemoteServices/DataModels/Server.h"
 #include "RemoteServices/Controllers/ServerController.h"
 #include "Services/ServerServicesBuilder.h"
+#include "Camera/Camera.h"
 #include <iostream>
 
 using namespace Scanner3DFirmware;
@@ -38,14 +39,18 @@ int main()
     if (!serverController->RegisterListener(std::move(servicesBuilder)))
         return fail(-6, "Cannot register services builder.");
 
+    if(!Camera::Camera::GetInstance().Initialize())
+        return fail(-7, "Cannot initialize camera.");
+    
     if (!server->Initialize())
-        return fail(-7, "Cannot initialize server data model.");
+        return fail(-8, "Cannot initialize server data model.");
 
     std::cout << "Server started successfully." << std::endl;
 
     while (true)
         server->Update();
 
+    Camera::Camera::GetInstance().Finalize();
     server->Finalize();
     Networking::Finalize();
 

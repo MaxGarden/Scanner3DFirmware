@@ -3,14 +3,48 @@
 
 using namespace Scanner3DFirmware::Camera;
 
-void Camera::ApplyConfig(CameraConfig&& config)
+bool Camera::Initialize()
 {
-    m_cameraConfig = std::move(config);
+    if(m_camera.isOpened())
+        return false;
+    
+    return m_camera.open();
+}
+
+void Camera::Finalize()
+{
+    const auto isCameraOpened = m_camera.isOpened();
+    FIRMWARE_ASSERT(isCameraOpened);
+    if(!isCameraOpened)
+        return;
+        
+    m_camera.release();
+}
+
+void Camera::ApplyConfig(const CameraConfig& config)
+{
+    m_camera.setWidth(config.Width);
+    m_camera.setHeight(config.Height);
+    m_camera.setBrightness(config.Brightness);
+    m_camera.setSharpness(config.Sharpness);
+    m_camera.setContrast(static_cast<int>(config.Contrast));
+    m_camera.setISO(config.ISO);
+    m_camera.setSaturation(config.Saturation);
 }
 
 CameraConfig Camera::GetConfig() const
 {
-    return m_cameraConfig;
+    CameraConfig result;
+    
+    result.Width = static_cast<unsigned short>(m_camera.getWidth());
+    result.Height = static_cast<unsigned short>(m_camera.getHeight());
+    result.Brightness = static_cast<unsigned char>(m_camera.getBrightness());
+    result.Sharpness = static_cast<char>(m_camera.getSharpness());
+    result.Contrast = static_cast<char>(m_camera.getContrast());
+    result.ISO = static_cast<unsigned short>(m_camera.getISO());
+    result.Saturation = static_cast<char>(m_camera.getSaturation());
+    
+    return result;
 }
 
 Camera& Camera::GetInstance() noexcept

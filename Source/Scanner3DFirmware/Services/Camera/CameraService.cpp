@@ -20,7 +20,7 @@ bool CameraService::Initialize()
         if (payload.size() == sizeof(Camera::CameraConfig))
         {
             const auto config = reinterpret_cast<const Camera::CameraConfig*>(payload.data());
-            Camera::Camera::GetInstance().ApplyConfig(Camera::CameraConfig{ *config });
+            Camera::Camera::GetInstance().ApplyConfig(*config);
         }
 
         return CreateConfigResponse();
