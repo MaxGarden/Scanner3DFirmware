@@ -28,8 +28,8 @@ bool CameraService::Initialize()
 
     result &= RegisterRequestHandler('c', [this](auto&& payload)
     {
-        //TODO
-        return Response{ Response::ResponseType::Fail, {} };
+        auto responsePayload = Camera::Camera::GetInstance().CaptureGrayScale();
+        return Response{ Response::ResponseType::Ok, std::move(responsePayload) };
     });
 
     FIRMWARE_ASSERT(result);
