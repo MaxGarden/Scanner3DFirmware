@@ -21,6 +21,19 @@ void Camera::Finalize()
     m_camera.release();
 }
 
+std::vector<Scanner3DFirmware::byte> Camera::RetriveGrayScaleImage()
+{
+    static const auto imageFormat = raspicam::RASPICAM_FORMAT_GRAY;
+    
+    std::vector<byte> result;
+    
+    const auto dataSize = m_camera.getImageTypeSize(imageFormat);
+    result.resize(dataSize);
+    
+    m_camera.retrieve(&result[0], imageFormat);
+    return result;
+}
+
 void Camera::ApplyConfig(const CameraConfig& config)
 {
     m_camera.setWidth(config.Width);

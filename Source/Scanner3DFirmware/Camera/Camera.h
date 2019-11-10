@@ -22,6 +22,8 @@ namespace Scanner3DFirmware::Camera
         bool Initialize();
         void Finalize();
 
+        std::vector<byte> RetriveGrayScaleImage();
+
         void ApplyConfig(const CameraConfig& config);
         CameraConfig GetConfig() const;
 

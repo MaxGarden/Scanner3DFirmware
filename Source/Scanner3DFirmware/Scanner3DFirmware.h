@@ -2,6 +2,7 @@
 
 #include <assert.h>
 #include <memory>
+#include <vector>
 
 namespace Scanner3DFirmware
 {
