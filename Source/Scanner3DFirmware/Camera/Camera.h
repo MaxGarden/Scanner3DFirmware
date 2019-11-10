@@ -1,5 +1,7 @@
 #pragma once
+#if defined(UNIX)
 #include <raspicam/raspicam.h>
+#endif
 
 namespace Scanner3DFirmware::Camera
 {
@@ -33,8 +35,10 @@ namespace Scanner3DFirmware::Camera
         Camera() = default;
 
     private:
+#if defined(UNIX)
         raspicam::RaspiCam m_camera;
         
         static const raspicam::RASPICAM_FORMAT s_cameraImageFormat;
+#endif
     };
 }

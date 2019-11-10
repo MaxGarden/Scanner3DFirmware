@@ -3,6 +3,7 @@
 
 using namespace Scanner3DFirmware::Camera;
 
+#if defined(UNIX)
 const raspicam::RASPICAM_FORMAT Camera::s_cameraImageFormat = raspicam::RASPICAM_FORMAT_GRAY;
 
 bool Camera::Initialize()
@@ -63,6 +64,32 @@ CameraConfig Camera::GetConfig() const
     
     return result;
 }
+#else
+
+bool Camera::Initialize()
+{
+    return true;
+}
+
+void Camera::Finalize()
+{
+}
+
+std::vector<Scanner3DFirmware::byte> Camera::Capture()
+{
+    return {};
+}
+
+void Camera::ApplyConfig(const CameraConfig& config)
+{
+}
+
+CameraConfig Camera::GetConfig() const
+{
+    return {};
+}
+
+#endif
 
 Camera& Camera::GetInstance() noexcept
 {
