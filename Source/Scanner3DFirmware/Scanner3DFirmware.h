@@ -5,5 +5,7 @@
 
 namespace Scanner3DFirmware
 {
+    using byte = unsigned char;
+    
     #define FIRMWARE_ASSERT(expression) assert(expression)
 }
