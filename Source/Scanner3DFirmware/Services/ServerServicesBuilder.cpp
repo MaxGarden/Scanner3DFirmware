@@ -2,6 +2,7 @@
 #include "ServerServicesBuilder.h"
 #include "RemoteServices/Services/ServiceFactory.h"
 
+#include "Config/ConfigService.h"
 #include "Camera/CameraService.h"
 
 using namespace Scanner3DFirmware;
@@ -17,5 +18,6 @@ void ServerServicesBuilder::RegisterServicesFactories(const RemoteServices::ISer
     if (!servicesController)
         return;
 
+    servicesController->RegisterServiceFactory(RemoteServices::ServiceFactory<ConfigService>::CreateFactory("config"));
     servicesController->RegisterServiceFactory(RemoteServices::ServiceFactory<CameraService>::CreateFactory("camera"));
 }
