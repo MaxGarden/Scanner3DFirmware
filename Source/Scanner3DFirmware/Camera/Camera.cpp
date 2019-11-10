@@ -3,15 +3,14 @@
 
 using namespace Scanner3DFirmware::Camera;
 
-void Camera::ApplyConfig(const CameraConfig& config)
+void Camera::ApplyConfig(CameraConfig&& config)
 {
-    //TODO
+    m_cameraConfig = std::move(config);
 }
 
 CameraConfig Camera::GetConfig() const
 {
-    //TODO
-    return CameraConfig{};
+    return m_cameraConfig;
 }
 
 Camera& Camera::GetInstance() noexcept

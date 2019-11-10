@@ -18,7 +18,7 @@ namespace Scanner3DFirmware::Camera
     public:
         ~Camera() = default;
 
-        void ApplyConfig(const CameraConfig& config);
+        void ApplyConfig(CameraConfig&& config);
         CameraConfig GetConfig() const;
 
         static Camera& GetInstance() noexcept;
@@ -27,5 +27,6 @@ namespace Scanner3DFirmware::Camera
         Camera() = default;
 
     private:
+        CameraConfig m_cameraConfig;
     };
 }
