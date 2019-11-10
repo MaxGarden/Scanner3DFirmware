@@ -11,8 +11,5 @@ namespace Scanner3DFirmware::Services
         virtual ~CameraService() override final = default;
 
         virtual bool Initialize() override final;
-
-    private:
-        Response CreateConfigResponse();
     };
 }

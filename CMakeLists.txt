@@ -28,6 +28,9 @@ SET(SCANNER_3D_FIRMWARE_SOURCES
     
     Source/Scanner3DFirmware/Services/Camera/CameraService.h
     Source/Scanner3DFirmware/Services/Camera/CameraService.cpp
+    
+    Source/Scanner3DFirmware/Services/Config/ConfigService.h
+    Source/Scanner3DFirmware/Services/Config/ConfigService.cpp
 )
 
 ADD_SUBDIRECTORY(Dependencies/RemoteServices)
