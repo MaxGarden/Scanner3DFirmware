@@ -32,7 +32,7 @@ bool ScannerService::Initialize()
     static const auto vectorResponse = [](const auto& data)
     {
         const auto beginIterator = reinterpret_cast<const byte*>(data.data());
-        const auto endIterator = beginIterator + data.size() * sizeof(std::remove_reference<decltype(data)>::type::value_type);
+        const auto endIterator = beginIterator + data.size() * sizeof(typename std::remove_reference<decltype(data)>::type::value_type);
 
         return Response{ Response::ResponseType::Ok, RemoteServices::ServicePayload{ beginIterator, endIterator } };
     };
