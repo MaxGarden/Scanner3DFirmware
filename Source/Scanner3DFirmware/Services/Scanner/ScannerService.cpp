@@ -9,7 +9,7 @@ bool ScannerService::Initialize()
 {
     auto result = RequestResponseServiceBase::Initialize();
 
-    static const auto binarizedData = []()
+    static const auto calculateBinarizedData = []()
     {
         auto result = Camera::Capture();
         Scanner::PerformBinarization(result);
@@ -17,9 +17,29 @@ bool ScannerService::Initialize()
         return result;
     };
 
+    static const auto calculateAveragePoints = []()
+    {
+        const auto cameraConfig = Camera::GetConfig();
+        return Scanner::CalculateAveragePoints(calculateBinarizedData(), cameraConfig.Width);
+    };
+
+    static const auto calculate3DPoints = []()
+    {
+        const auto averagePoints = calculateAveragePoints();
+        return Scanner::Calculate3DPoints(averagePoints);
+    };
+
+    static const auto vectorResponse = [](const auto& data)
+    {
+        const auto beginIterator = reinterpret_cast<const byte*>(data.data());
+        const auto endIterator = beginIterator + data.size() * sizeof(std::remove_reference<decltype(data)>::type::value_type);
+
+        return Response{ Response::ResponseType::Ok, RemoteServices::ServicePayload{ beginIterator, endIterator } };
+    };
+
     result &= RegisterRequestHandler('b', [](auto&& payload)
     {
-        auto responsePayload = binarizedData();
+        auto responsePayload = calculateBinarizedData();
         const auto responseType = responsePayload.empty() ? Response::ResponseType::Fail : Response::ResponseType::Ok;
 
         return Response{ responseType, std::move(responsePayload) };
@@ -27,15 +47,12 @@ bool ScannerService::Initialize()
 
     result &= RegisterRequestHandler('a', [](auto&& payload)
     {
-        const auto cameraConfig = Camera::GetConfig();
-        const auto averagePoints = Scanner::CalculateAveragePoints(binarizedData(), cameraConfig.Width);
+        return vectorResponse(calculateAveragePoints());
+    });
 
-        RemoteServices::ServicePayload responsePayload;
-
-        const auto beginIterator = reinterpret_cast<const byte*>(averagePoints.data());
-        const auto endIterator = beginIterator + averagePoints.size() * sizeof(decltype(averagePoints)::value_type);
-
-        return Response{ Response::ResponseType::Ok, RemoteServices::ServicePayload{ beginIterator, endIterator } };
+    result &= RegisterRequestHandler('r', [](auto&& payload)
+    {
+        return vectorResponse(calculate3DPoints());
     });
 
     FIRMWARE_ASSERT(result);
