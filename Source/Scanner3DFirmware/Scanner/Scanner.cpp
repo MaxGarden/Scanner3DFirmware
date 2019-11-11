@@ -27,7 +27,7 @@ const Scanner::Config& Scanner::GetConfig()
 void Scanner::PerformBinarization(Data& data)
 {
     for (auto& current : data)
-        current = current >= s_config.TresholdMin && current <= s_config.TresholdMax;
+        current = current >= s_config.TresholdMin && current <= s_config.TresholdMax ? 255 : 0;
 }
 
 Scanner::PointsData Scanner::CalculateAveragePoints(const Data& binarizedData, unsigned short rowWidth)
