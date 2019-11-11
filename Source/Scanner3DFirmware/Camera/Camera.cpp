@@ -71,6 +71,8 @@ Camera::Config Camera::GetConfig()
 }
 #else
 
+static Camera::Config s_config;
+
 bool Camera::Initialize()
 {
     return true;
@@ -87,11 +89,12 @@ std::vector<Scanner3DFirmware::byte> Camera::Capture()
 
 void Camera::ApplyConfig(const Config& config)
 {
+    s_config = config;
 }
 
 Camera::Config Camera::GetConfig()
 {
-    return {};
+    return s_config;
 }
 
 #endif
