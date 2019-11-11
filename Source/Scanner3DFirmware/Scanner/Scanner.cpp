@@ -13,8 +13,8 @@ void Scanner::ApplyConfig(Config&& config)
     if (config.TresholdMin > config.TresholdMax)
         config.TresholdMin = config.TresholdMax - 1;
 
-    if (sin(config.CameraLaserAngleInRad) == 0.0f)
-        config.CameraLaserAngleInRad = 3.14f / 2.0f;
+    if (sin(config.CameraLaserInclinationInRad) == 0.0f)
+        config.CameraLaserInclinationInRad = 3.14f / 2.0f;
 
     s_config = std::move(config);
 }
@@ -72,8 +72,8 @@ Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData)
 
     for (const auto& point : pointsData)
     {
-        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserAngleInRad);
-        const auto height = (point.Y - s_config.Origin.Y) * cos(s_config.AxisCameraAngleInRad);
+        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRad);
+        const auto height = (point.Y - s_config.Origin.Y) * cos(s_config.AxisCameraInclinationInRad);
 
         result.emplace_back(Point3D{ static_cast<float>(radius), static_cast<float>(height) });
     }

@@ -25,8 +25,8 @@ namespace Scanner3DFirmware::Scanner
 
         Point Origin;
 
-        float CameraLaserAngleInRad;
-        float AxisCameraAngleInRad;
+        float CameraLaserInclinationInRad;
+        float AxisCameraInclinationInRad;
     };
 
     void ApplyConfig(Config&& config);
