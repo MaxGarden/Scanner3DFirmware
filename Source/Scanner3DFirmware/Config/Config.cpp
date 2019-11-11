@@ -13,7 +13,7 @@ static void TryLoadConfig()
 
     if (file.good())
     {
-        Scanner::Config config;
+        Config::Config config;
         file.read(reinterpret_cast<char*>(&config), sizeof(config));
         ApplyConfig(std::move(config));
     }
@@ -34,7 +34,7 @@ static void SaveConfig()
     FIRMWARE_ASSERT(file.good());
     if (file.good())
     {
-        const auto config = Scanner::GetConfig();
+        const auto config = Config::GetConfig();
         file.write(reinterpret_cast<const char*>(&config), sizeof(config));
     }
 
