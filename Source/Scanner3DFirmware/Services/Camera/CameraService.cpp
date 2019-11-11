@@ -8,7 +8,7 @@ bool CameraService::Initialize()
 {
     auto result = RequestResponseServiceBase::Initialize();
 
-    result &= RegisterRequestHandler('c', [this](auto&& payload)
+    result &= RegisterRequestHandler('c', [](auto&& payload)
     {
         auto responsePayload = Camera::Capture();
         const auto responseType = responsePayload.empty() ? Response::ResponseType::Fail : Response::ResponseType::Ok;
