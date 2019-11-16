@@ -30,12 +30,14 @@ void Tray::Finalize()
 {
 }
 
-void Tray::StepForward()
+bool Tray::StepForward()
 {
+    return true;
 }
 
-void Tray::StepBackward()
+bool Tray::StepBackward()
 {
+    return true;
 }
 
 #endif

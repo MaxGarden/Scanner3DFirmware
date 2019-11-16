@@ -10,8 +10,8 @@ namespace Scanner3DFirmware::Tray
     bool Initialize();
     void Finalize();
 
-    void StepForward();
-    void StepBackward();
+    bool StepForward();
+    bool StepBackward();
 
     void ApplyConfig(const Config& config);
     Config GetConfig();
