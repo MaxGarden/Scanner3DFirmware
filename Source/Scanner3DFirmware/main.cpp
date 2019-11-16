@@ -6,6 +6,7 @@
 #include "Services/ServerServicesBuilder.h"
 #include "Camera/Camera.h"
 #include "Config/Config.h"
+#include "Tray/Tray.h"
 
 #include <iostream>
 
@@ -44,6 +45,9 @@ int main()
     if (!Camera::Initialize())
         return fail(-7, "Cannot initialize camera.");
     
+    if (!Tray::Initialize())
+        return fail(-7, "Cannot initialize tray");
+
     if (!Config::Initialize())
         return fail(-8, "Cannot initialize config.");
 
@@ -57,6 +61,7 @@ int main()
 
     Config::Finalize();
     Camera::Finalize();
+    Tray::Finalize();
     server->Finalize();
     Networking::Finalize();
 

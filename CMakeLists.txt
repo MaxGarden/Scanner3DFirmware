@@ -26,6 +26,9 @@ SET(SCANNER_3D_FIRMWARE_SOURCES
     Source/Scanner3DFirmware/Config/Config.h
     Source/Scanner3DFirmware/Config/Config.cpp
     
+    Source/Scanner3DFirmware/Tray/Tray.h
+    Source/Scanner3DFirmware/Tray/Tray.cpp
+    
     Source/Scanner3DFirmware/Services/Camera/CameraService.h
     Source/Scanner3DFirmware/Services/Camera/CameraService.cpp
     
