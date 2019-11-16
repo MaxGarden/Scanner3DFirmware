@@ -53,6 +53,7 @@ void Camera::ApplyConfig(const Config& config)
     s_camera.setContrast(static_cast<int>(config.Contrast));
     s_camera.setISO(config.ISO);
     s_camera.setSaturation(config.Saturation);
+    s_camera.setRotation(config.Rotation);
 }
 
 Camera::Config Camera::GetConfig()
@@ -66,6 +67,7 @@ Camera::Config Camera::GetConfig()
     result.Contrast = static_cast<char>(s_camera.getContrast());
     result.ISO = static_cast<unsigned short>(s_camera.getISO());
     result.Saturation = static_cast<char>(s_camera.getSaturation());
+    result.Rotation = static_cast<unsigned short>(s_camera.getRotation());
     
     return result;
 }
