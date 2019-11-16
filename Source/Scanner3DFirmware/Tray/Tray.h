@@ -4,7 +4,9 @@ namespace Scanner3DFirmware::Tray
 {
     struct Config
     {
-        unsigned short DegreesPerStep; //from 9/160 to 360 (step 9/160)
+        float MotorStepAngleInDegrees; //readonly
+        unsigned short MotorStepsPerTrayStep = 1; //from 1 to 6400
+        unsigned short MotorStepDelayInMiliseconds = 100;
     };
 
     bool Initialize();
@@ -13,6 +15,6 @@ namespace Scanner3DFirmware::Tray
     bool StepForward();
     bool StepBackward();
 
-    void ApplyConfig(const Config& config);
+    void ApplyConfig(Config&& config);
     Config GetConfig();
 }

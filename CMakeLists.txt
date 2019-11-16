@@ -53,7 +53,7 @@ TARGET_INCLUDE_DIRECTORIES(Scanner3DFirmware PRIVATE Source Source/Scanner3DFirm
 IF(WIN32)
     TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices)
 ELSE()
-    TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices raspicam)
+    TARGET_LINK_LIBRARIES(Scanner3DFirmware RemoteServices raspicam wiringPi)
 ENDIF()
 
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
