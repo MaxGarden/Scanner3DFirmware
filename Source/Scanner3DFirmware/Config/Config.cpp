@@ -50,11 +50,12 @@ void Config::ApplyConfig(Config&& config)
 {
     Camera::ApplyConfig(config.CameraConfig);
     Scanner::ApplyConfig(std::move(config.ScannerConfig));
+    Tray::ApplyConfig(std::move(config.TrayConfig));
 
     SaveConfig();
 }
 
 Config::Config Config::GetConfig()
 {
-    return { Camera::GetConfig(), Scanner::GetConfig() };
+    return { Camera::GetConfig(), Scanner::GetConfig(), Tray::GetConfig() };
 }
