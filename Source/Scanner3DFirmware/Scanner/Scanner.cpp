@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Scanner.h"
+#include "Config/Config.h"
 
 using namespace Scanner3DFirmware;
 
@@ -73,10 +74,12 @@ Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData, f
     Points3DData result;
     result.reserve(pointsData.size());
 
+    const auto& cameraConfig = Scanner3DFirmware::Config::GetConfig().CameraConfig;
+
     for (const auto& point : pointsData)
     {
-        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRadians);
-        const auto height = (s_config.Origin.Y - point.Y) * cos(s_config.AxisCameraInclinationInRadians);
+        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRadians) / cameraConfig.Width;
+        const auto height = (s_config.Origin.Y - point.Y) * cos(s_config.AxisCameraInclinationInRadians) / cameraConfig.Height;
 
         result.emplace_back(Point3D{ static_cast<float>(radius * sin(trayAngleInRadians)), static_cast<float>(height), static_cast<float>(radius * cos(trayAngleInRadians))});
     }
