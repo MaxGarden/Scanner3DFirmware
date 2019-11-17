@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Scanner.h"
 
-#include <algorithm>
-
 using namespace Scanner3DFirmware;
 
 static Scanner::Config s_config;
@@ -40,7 +38,7 @@ Scanner::PointsData Scanner::CalculateAveragePoints(const Data& binarizedData, u
         return result;
 
     FIRMWARE_ASSERT(binarizedData.size() % rowWidth == 0);
-    const auto rowsCount = std::min(binarizedData.size() / rowWidth, static_cast<size_t>(GetConfig().Origin.Y));
+    const auto rowsCount = binarizedData.size() / rowWidth;
 
     result.reserve(rowsCount);
 
