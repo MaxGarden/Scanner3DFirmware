@@ -13,8 +13,8 @@ void Scanner::ApplyConfig(Config&& config)
     if (config.TresholdMin > config.TresholdMax)
         config.TresholdMin = config.TresholdMax - 1;
 
-    if (sin(config.CameraLaserInclinationInRad) == 0.0f)
-        config.CameraLaserInclinationInRad = 3.14f / 2.0f;
+    if (sin(config.CameraLaserInclinationInRadians) == 0.0f)
+        config.CameraLaserInclinationInRadians = 3.14f / 2.0f;
 
     s_config = std::move(config);
 }
@@ -68,17 +68,17 @@ Scanner::PointsData Scanner::CalculateAveragePoints(const Data& binarizedData, u
     return result;
 }
 
-Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData, float trayAngle)
+Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData, float trayAngleInRadians)
 {
     Points3DData result;
     result.reserve(pointsData.size());
 
     for (const auto& point : pointsData)
     {
-        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRad);
-        const auto height = (s_config.Origin.Y - point.Y) * cos(s_config.AxisCameraInclinationInRad);
+        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRadians);
+        const auto height = (s_config.Origin.Y - point.Y) * cos(s_config.AxisCameraInclinationInRadians);
 
-        result.emplace_back(Point3D{ static_cast<float>(radius * sin(trayAngle)), static_cast<float>(height), static_cast<float>(radius * cos(trayAngle))});
+        result.emplace_back(Point3D{ static_cast<float>(radius * sin(trayAngleInRadians)), static_cast<float>(height), static_cast<float>(radius * cos(trayAngleInRadians))});
     }
 
     return result;

@@ -52,8 +52,8 @@ bool ScannerService::Initialize()
 
     result &= RegisterRequestHandler('r', [](auto&& payload)
     {
-        const auto trayAngle = *reinterpret_cast<float*>(payload.data());
-        return vectorResponse(calculate3DPoints(trayAngle));
+        const auto trayAngleInRadians = *reinterpret_cast<float*>(payload.data());
+        return vectorResponse(calculate3DPoints(trayAngleInRadians));
     });
 
     FIRMWARE_ASSERT(result);
