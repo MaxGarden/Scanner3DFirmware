@@ -76,7 +76,7 @@ Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData, f
     for (const auto& point : pointsData)
     {
         const auto radius = static_cast<float>((point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRad));
-        const auto height = static_cast<float>((point.Y - s_config.Origin.Y) * cos(s_config.AxisCameraInclinationInRad));
+        const auto height = static_cast<float>((s_config.Origin.Y - point.Y) * cos(s_config.AxisCameraInclinationInRad));
 
         result.emplace_back(Point3D{ radius * sin(trayAngle), height, radius * cos(trayAngle) });
     }
