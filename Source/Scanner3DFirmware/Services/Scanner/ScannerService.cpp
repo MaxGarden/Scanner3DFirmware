@@ -23,10 +23,10 @@ bool ScannerService::Initialize()
         return Scanner::CalculateAveragePoints(calculateBinarizedData(), cameraConfig.Width);
     };
 
-    static const auto calculate3DPoints = []()
+    static const auto calculate3DPoints = [](auto trayAngle)
     {
         const auto averagePoints = calculateAveragePoints();
-        return Scanner::Calculate3DPoints(averagePoints);
+        return Scanner::Calculate3DPoints(averagePoints, trayAngle);
     };
 
     static const auto vectorResponse = [](const auto& data)
@@ -52,7 +52,8 @@ bool ScannerService::Initialize()
 
     result &= RegisterRequestHandler('r', [](auto&& payload)
     {
-        return vectorResponse(calculate3DPoints());
+        const auto trayAngle = *reinterpret_cast<float*>(payload.data());
+        return vectorResponse(calculate3DPoints(trayAngle));
     });
 
     FIRMWARE_ASSERT(result);

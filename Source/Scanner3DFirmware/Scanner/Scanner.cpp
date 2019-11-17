@@ -32,11 +32,14 @@ void Scanner::PerformBinarization(Data& data)
 
 Scanner::PointsData Scanner::CalculateAveragePoints(const Data& binarizedData, unsigned short rowWidth)
 {
-    FIRMWARE_ASSERT(binarizedData.size() % rowWidth == 0);
+    PointsData result;
+    FIRMWARE_ASSERT(rowWidth > 0);
+    if (rowWidth <= 0)
+        return result;
 
+    FIRMWARE_ASSERT(binarizedData.size() % rowWidth == 0);
     const auto rowsCount = binarizedData.size() / rowWidth;
 
-    PointsData result;
     result.reserve(rowsCount);
 
     for (unsigned short rowNumber = 0; rowNumber < rowsCount; ++rowNumber)
@@ -65,17 +68,17 @@ Scanner::PointsData Scanner::CalculateAveragePoints(const Data& binarizedData, u
     return result;
 }
 
-Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData)
+Scanner::Points3DData Scanner::Calculate3DPoints(const PointsData& pointsData, float trayAngle)
 {
     Points3DData result;
     result.reserve(pointsData.size());
 
     for (const auto& point : pointsData)
     {
-        const auto radius = (point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRad);
-        const auto height = (point.Y - s_config.Origin.Y) * cos(s_config.AxisCameraInclinationInRad);
+        const auto radius = static_cast<float>((point.X - s_config.Origin.X) / sin(s_config.CameraLaserInclinationInRad));
+        const auto height = static_cast<float>((point.Y - s_config.Origin.Y) * cos(s_config.AxisCameraInclinationInRad));
 
-        result.emplace_back(Point3D{ static_cast<float>(radius), static_cast<float>(height) });
+        result.emplace_back(Point3D{ radius * sin(trayAngle), height, radius * cos(trayAngle) });
     }
 
     return result;

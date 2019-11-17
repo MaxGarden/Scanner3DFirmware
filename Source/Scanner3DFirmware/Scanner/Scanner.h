@@ -13,8 +13,9 @@ namespace Scanner3DFirmware::Scanner
 
     struct Point3D
     {
-        float Radius;
-        float Height;
+        float X;
+        float Y;
+        float Z;
     };
     using Points3DData = std::vector<Point3D>;
 
@@ -34,6 +35,6 @@ namespace Scanner3DFirmware::Scanner
 
     void PerformBinarization(Data& data);
     PointsData CalculateAveragePoints(const Data& binarizedData, unsigned short rowWidth);
-    Points3DData Calculate3DPoints(const PointsData& pointsData);
+    Points3DData Calculate3DPoints(const PointsData& pointsData, float trayAngle);
 
 }
