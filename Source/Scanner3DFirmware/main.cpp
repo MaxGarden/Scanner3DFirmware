@@ -57,7 +57,10 @@ int main()
     std::cout << "Server started successfully." << std::endl;
 
     while (true)
+    {
         server->Update();
+        Tray::Update();
+    }
 
     Config::Finalize();
     Camera::Finalize();

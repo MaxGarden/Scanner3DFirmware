@@ -12,6 +12,8 @@ namespace Scanner3DFirmware::Tray
     bool Initialize();
     void Finalize();
 
+    void Update();
+
     bool StepForward();
     bool StepBackward();
 
