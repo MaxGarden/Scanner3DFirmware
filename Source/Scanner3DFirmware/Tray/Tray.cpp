@@ -48,9 +48,10 @@ void Tray::Finalize()
 void Tray::Update()
 {
     const auto nowTimePoint = std::chrono::steady_clock::now();
-    const auto resetTimeStep = std::min(200, 2 * GetConfig().MotorStepDelayInMiliseconds);
-
-    if(std::chrono::duration_cast<std::chrono::milliseconds>(nowTimePoint - s_lastStepTimePoint) > resetTimeStep)
+    const auto resetTimeStep = std::max(200, 2 * GetConfig().MotorStepDelayInMiliseconds);
+    const auto lastStepTimeStep = std::chrono::duration_cast<std::chrono::milliseconds>(nowTimePoint - s_lastStepTimePoint).count();
+    
+    if(lastStepTimeStep > resetTimeStep)
         digitalWrite(s_enablePin, 1);
 }
 
