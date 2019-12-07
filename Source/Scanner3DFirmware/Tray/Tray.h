@@ -5,7 +5,7 @@ namespace Scanner3DFirmware::Tray
     struct Config
     {
         float MotorStepAngleInDegrees; //readonly
-        unsigned short MotorStepsPerTrayStep = 1; //from 1 to 400
+        unsigned short MotorStepsPerTrayStep = 1; //from 1 to 200
         unsigned short MotorStepDelayInMiliseconds = 100;
     };
 

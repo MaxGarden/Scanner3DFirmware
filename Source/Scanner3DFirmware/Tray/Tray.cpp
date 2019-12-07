@@ -8,7 +8,7 @@
 using namespace Scanner3DFirmware;
 
 static Tray::Config s_config;
-static const auto s_motorStepAngleInDegrees = 0.9f;
+static const auto s_motorStepAngleInDegrees = 1.8f;
 
 void Tray::ApplyConfig(Config&& config)
 {
